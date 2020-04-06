@@ -1,0 +1,19 @@
+<!-- <input [(ngModel)]="channel" (keyup)="$event.keyCode == 13 && createChannel()" /> -->
+<form [formGroup]="channel" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" formControlName="name"/>
+    </div>
+    <button (click)="createChannel()">Create Channel</button>
+</form>
+
+<div *ngFor="let channel of channels">
+  {{ channel.name }}
+</div>
+
+<div *ngFor="let message of messages">
+    {{message.text}}
+</div>
+
+<input [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessage()" />
+<button (click)="sendMessage()">Send</button>
