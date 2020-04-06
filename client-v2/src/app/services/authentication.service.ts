@@ -26,39 +26,9 @@ export class AuthenticationService {
       return observable;
     }
 
-    public register(data) {
-        this.socket.emit('newUser', data);
-    }
-
-    public getRegister() {
-        let observable = new Observable(observer => {
-            this.socket.on('newUser', (data) => {
-                console.log(data)
-                this.user = data;
-                observer.next(data);
-            });
-            return () => {
-                this.socket.disconnect();
-            };
-        })
-        return observable;
-    }
-
-    public logout(data) {
-        this.socket.emit('logout', data);
-    }
-
-    public getLogout() {
-        let observable = new Observable(observer => {
-            this.socket.on('logout', (data) => {
-                console.log(data)
-                this.user = null;
-                observer.next(data);
-            });
-            return () => {
-                this.socket.disconnect();
-            };
-        })
-        return observable;
+    logout() {
+        // remove user from local storage and set current user to null
+        // localStorage.removeItem('currentUser');
+        // this.currentUserSubject.next(null);
     }
 }

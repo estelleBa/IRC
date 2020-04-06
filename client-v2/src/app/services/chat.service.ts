@@ -14,11 +14,7 @@ export class ChatService {
     public getMessages() {
         let observable = new Observable(observer => {
             this.socket.on('message', (data) => {
-                let message = {
-                    "text": data,
-                    "user_id": "",
-                    "chan": ""
-                }
+                let message = data
                 observer.next(message);
             });
             return () => {

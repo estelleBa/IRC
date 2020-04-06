@@ -2,6 +2,7 @@
 <div *ngIf="user; else out">
     <nav class="navbar navbar-expand navbar-dark bg-dark">
         <div class="navbar-nav">
+            <a class="nav-item nav-link" routerLink="/">Home</a>
             <a class="nav-item nav-link" (click)="logout()">Logout</a>
         </div>
     </nav>
@@ -10,5 +11,4 @@
 
 <ng-template #out>
     <app-login></app-login>
-    <app-register></app-register>
 </ng-template>

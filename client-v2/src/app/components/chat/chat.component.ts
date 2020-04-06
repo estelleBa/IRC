@@ -11,15 +11,15 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class ChatComponent implements OnInit {
     public user;
     message: {
-        "text": string,
+        "content": string,
         "user": {},
         "channel": {}
     };
     messages: {}[] = [];
-    // channel: {
-    //     "name": string,
-    //     "history":[]
-    // };
+    channel: {
+        "name": string,
+        "history":[]
+    };
     channels: {}[] = [];
 
     constructor(
@@ -31,9 +31,23 @@ export class ChatComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.channel = new FormGroup({
+        this.channelForm = new FormGroup({
             name: new FormControl()
         });
+        // this.channel = {
+        //   "name": this.channelForm.value.name
+        // }
+        this.messageForm = new FormGroup({
+            content: new FormControl(),
+            user: new FormControl(),
+            channel: new FormControl()
+        });
+        // this.message = {
+        //   "content": this.messageForm.value.content,
+        //   "user": this.messageForm.value.user,
+        //   "channel": this.messageForm.value.channel,
+        // }
+
         this.chatService
         .getMessages()
         .subscribe((message) => {
@@ -49,18 +63,31 @@ export class ChatComponent implements OnInit {
             console.log(this.channels)
         });
     }
+    onSubmit() {
+        this.submitted = true;
+        console.log(this.messageForm.value)
+        this.name = null
+        this.messageForm.reset()
+        this.channelForm.reset()
+        // this.authenticationService.login(this.loginForm.value);
+    }
 
     sendMessage() {
+      console.log("SEND MESSAGE")
         console.log(this.message)
-        this.chatService.sendMessage(this.message);
-        this.message = null;
+        this.chatService.sendMessage(this.messageForm.value);
+        this.channels[0].histories.push(this.messageForm.value);
+        this.message = {...this.messageForm.value, "content": "wqeq"};
+        console.log("... TEST 1")
+        console.log(this.message)
+
     }
 
     createChannel() {
       console.log("FIRST ENTRY >????")
         console.log(this.channel)
-
-        this.channelsService.createChannel(this.channel);
+        this.channelsService.createChannel(this.channelForm.value);
+        // this.channels.push(this.channelForm.value);
         this.channel = null;
     }
 }

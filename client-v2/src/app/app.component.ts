@@ -26,22 +26,9 @@ export class AppComponent {
             this.user = data;
             //this.router.navigate(['/']);
         });
-        this.authenticationService
-        .getRegister()
-        .subscribe((data) => {
-            console.log(data)
-            this.user = data;
-        });
-        this.authenticationService
-        .getLogout()
-        .subscribe((data) => {
-            console.log(data)
-            this.user = null;
-        });
     }
 
     public logout() {
-        console.log(this.user)
-        this.authenticationService.logout({user: this.user});
+        
     }
 }
