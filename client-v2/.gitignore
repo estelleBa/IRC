@@ -41,6 +41,7 @@ yarn-error.log
 testem.log
 node_modules/
 /typings
+yarn.lock
 
 # System Files
 .DS_Store
