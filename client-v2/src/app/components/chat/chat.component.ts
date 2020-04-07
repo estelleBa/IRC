@@ -21,6 +21,8 @@ export class ChatComponent implements OnInit {
         "history":[]
     };
     channels: {}[] = [];
+    messageForm: FormGroup;
+    channelForm: FormGroup;
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -64,9 +66,9 @@ export class ChatComponent implements OnInit {
         });
     }
     onSubmit() {
-        this.submitted = true;
+        // this.submitted = true;
         console.log(this.messageForm.value)
-        this.name = null
+        // this.name = null
         this.messageForm.reset()
         this.channelForm.reset()
         // this.authenticationService.login(this.loginForm.value);
@@ -77,7 +79,7 @@ export class ChatComponent implements OnInit {
         console.log(this.message)
         this.chatService.sendMessage(this.messageForm.value);
         this.channels[0].histories.push(this.messageForm.value);
-        this.message = {...this.messageForm.value, "content": "wqeq"};
+        this.message = {...this.messageForm.value, "content": null};
         console.log("... TEST 1")
         console.log(this.message)
 

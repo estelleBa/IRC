@@ -1,4 +1,27 @@
 <!-- <input [(ngModel)]="channel" (keyup)="$event.keyCode == 13 && createChannel()" /> -->
+<script>
+  function openCity(evt, cityName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  } 
+</script>
+
 <form [formGroup]="channelForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <label for="name">Name</label>
@@ -7,16 +30,26 @@
     <button (click)="createChannel()">Create Channel</button>
 </form>
 
+
+<div class="tab">
+  <div *ngFor="let channel of channels">
+    <button class="tablinks" onclick="openCity(event, {{ channel.name }})">{{ channel.name }}</button>
+  </div>
+</div>
+
 <div *ngFor="let channel of channels">
-  {{ channel.name }}
-  <div *ngFor="let history of channel.histories">
-    {{ history.user + ": "  + history.content}}
+
+  <div id="{{channel.name}}" class="tabcontent">
+    <h3>{{ channel.name }}</h3>
+    <div *ngFor="let history of channel.histories">
+      {{ history.user + ": "  + history.content}}
+    </div>
   </div>
   <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <input type="text" formControlName="content"/>
-      <!-- <input type="text" [ngModel]="Aikoho" formControlName="user"/> -->
-      <input type="text" [ngModel]="channel.name" formControlName="channel"/>
+      <input type="text" hidden [ngModel]="Aikoho" formControlName="user"/>
+      <input type="text" hidden [ngModel]="channel.name" formControlName="channel"/>
     </div>
     <button (click)="sendMessage()">Send</button>
   </form>
