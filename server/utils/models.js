@@ -13,15 +13,15 @@ var HistorySchema = new mongoose.Schema({
         type: String
     },
     datetime: {
-        type: Date, default: Date.now
+        type: String
     },
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        type: String
     },
     type: {
         type: String
     }
+
 });
 var History = mongoose.model('History', HistorySchema);
 
