@@ -28,12 +28,12 @@ export class AppComponent {
     }
 
     public logout() {
-        let channelDatas = [];
-        for (let i = 0; i < this.channelsLeft.length; i++) {
-            let channelData = { channel: this.channelsLeft[i], user: this.user, content: "left the chat", type: "red" };
-            channelDatas.push(channelData);
-        }
-        this.chatService.sendMessage(channelDatas);
+        // let channelDatas = [];
+        // for (let i = 0; i < this.channelsLeft.length; i++) {
+        //     let channelData = { channel: this.channelsLeft[i], user: this.user, content: "left the chat", type: "red" };
+        //     channelDatas.push(channelData);
+        // }
+        // this.chatService.sendMessage(channelDatas);
         this.user = null;
         this.channelsLeft = null;
         document.location.reload(true);
