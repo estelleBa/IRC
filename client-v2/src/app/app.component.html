@@ -2,7 +2,7 @@
 <div *ngIf="user; else out">
     <nav class="navbar navbar-expand navbar-dark bg-dark">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" routerLink="/">Home</a>
+            <p class="user-info nav-item nav-link">User: {{ user }}</p>
             <a class="nav-item nav-link" (click)="logout()">Logout</a>
         </div>
     </nav>
@@ -10,5 +10,13 @@
 </div>
 
 <ng-template #out>
-    <app-login></app-login>
+    <div class="container card bg-dark text-white">
+        <div class="user-form row justify-content-center align-items-center">
+            ﻿<h2>Enter a Name</h2>
+            <div class="user-form-inputs">
+                <input class="form-control" type="text" id="user" (keyup)="$event.keyCode == 13 && login()" />
+                <button class="btn btn-primary" (click)="login()">Send</button>
+            </div>
+        </div>
+    </div>
 </ng-template>

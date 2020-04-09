@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthenticationService } from './services/authentication.service';
+import { Component, ViewChild } from '@angular/core';
+import { ChatService } from './services/chat.service';
+import { ChatComponent } from './components/chat';
 
 @Component({
       selector: 'app-root',
@@ -10,25 +10,32 @@ import { AuthenticationService } from './services/authentication.service';
 export class AppComponent {
     title = 'IRC';
     public user;
+    public channelsLeft;
+    @ViewChild(ChatComponent)
 
+    set currentChannels(chan: ChatComponent) {
+        if (chan !== undefined)
+            this.channelsLeft = chan.currentChannels;
+    };
 
-    constructor(private router: Router,
-    private authenticationService: AuthenticationService,
-    ) {
-        this.user = this.authenticationService.user;
-    }
+    constructor(
+        private chatService: ChatService,
+    ) {}
 
-    ngOnInit() {
-        this.authenticationService
-        .getLogin()
-        .subscribe((data) => {
-            console.log(data)
-            this.user = data;
-            //this.router.navigate(['/']);
-        });
+    public login() {
+        let user = document.getElementById('user').value;
+        this.user = user;
     }
 
     public logout() {
-        
+        let channelDatas = [];
+        for (let i = 0; i < this.channelsLeft.length; i++) {
+            let channelData = { channel: this.channelsLeft[i], user: this.user, content: "left the chat", type: "red" };
+            channelDatas.push(channelData);
+        }
+        this.chatService.sendMessage(channelDatas);
+        this.user = null;
+        this.channelsLeft = null;
+        document.location.reload(true);
     }
 }

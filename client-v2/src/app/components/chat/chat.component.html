@@ -1,60 +1,48 @@
-<!-- <input [(ngModel)]="channel" (keyup)="$event.keyCode == 13 && createChannel()" /> -->
-<script>
-  function openCity(evt, cityName) {
-    // Declare all variables
-    var i, tabcontent, tablinks;
+<div class="row">
+    <div class="left-side col col-3">
+        <form [formGroup]="channelForm" (ngSubmit)="createChannel()" class="card-header">
+            <div class="form-group">
+                <label for="name">Create a channel:</label>
+                <input type="text" formControlName="name"/>
+            </div>
+            <button class="btn btn-primary">Ok</button>
+        </form>
 
-    // Get all elements with class="tabcontent" and hide them
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
-    }
-
-    // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-
-    // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
-  } 
-</script>
-
-<form [formGroup]="channelForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" formControlName="name"/>
+        <div *ngFor="let channel of channels">
+            <div (click)="showChannel(channel)">
+                <div class="channel-title card-header" id="channel-{{ channel._id }}">{{ channel.name }}</div>
+            </div>
+        </div>
     </div>
-    <button (click)="createChannel()">Create Channel</button>
-</form>
 
-
-<div class="tab">
-  <div *ngFor="let channel of channels">
-    <button class="tablinks" onclick="openCity(event, {{ channel.name }})">{{ channel.name }}</button>
-  </div>
+    <div class="right-side col col-9">
+        <div *ngFor="let channel of channels">
+            <div class="chat-container" id="chat-{{ channel._id }}" style="display:none;">
+                <div class="chat-menu row">
+                    <div class="update-form col col-7 card-header" style="padding:20px;">
+                        <p>Change channel name:</p>
+                        <input id="update-{{ channel._id }}" (keyup)="$event.keyCode == 13 && editChannel(channel)" />
+                        <button class="btn btn-primary" (click)="editChannel(channel)">Ok</button>
+                    </div>
+                    <div class="col col-2 card-header" style="text-align: right; padding:20px;" (click)="deleteChannel(channel)">Delete</div>
+                    <div class="col col-2 card-header" style="text-align: right; padding:20px;" (click)="closeChat(channel)">x Close</div>
+                </div>
+                <div class="chat-content">
+                    <div *ngFor="let history of channel.histories">
+                        <div class="msg-header">
+                            <p>{{ history.datetime }} - </p>
+                            <p>{{ history.user }}: </p>
+                        </div>
+                        <div class="msg">
+                            <p style="color: {{ history.type }}">{{ history.content }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-form">
+                    <input id="msg-{{ channel._id }}" (keyup)="$event.keyCode == 13 && sendMessage(channel)" style="width: 87%;margin-right:5px;"/>
+                    <button class="btn btn-primary" (click)="sendMessage(channel)">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<div *ngFor="let channel of channels">
-
-  <div id="{{channel.name}}" class="tabcontent">
-    <h3>{{ channel.name }}</h3>
-    <div *ngFor="let history of channel.histories">
-      {{ history.user + ": "  + history.content}}
-    </div>
-  </div>
-  <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <input type="text" formControlName="content"/>
-      <input type="text" hidden [ngModel]="Aikoho" formControlName="user"/>
-      <input type="text" hidden [ngModel]="channel.name" formControlName="channel"/>
-    </div>
-    <button (click)="sendMessage()">Send</button>
-  </form>
-</div>
-
-
-
-<!-- <input [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessage()" /> -->

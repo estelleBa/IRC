@@ -1,14 +1,9 @@
 ﻿import { Routes, RouterModule } from '@angular/router';
 
-// import { HomeComponent } from './components/home';
-// import { LoginComponent } from './components/login';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
-    //{ path: '', component: HomeComponent },
-    //{ path: 'login', component: LoginComponent },
-    // { path: 'register', component: RegisterComponent },
-
-    // otherwise redirect to home
+    { path: 'logout', redirectTo: 'logout' },
     { path: '**', redirectTo: '' }
 ];
 
