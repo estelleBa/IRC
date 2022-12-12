@@ -21,7 +21,7 @@
     "@angular/platform-browser-dynamic": "~9.0.7",
     "@angular/router": "~9.0.7",
     "@wishtack/rx-scavenger": "^2.0.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "nodemon": "^2.0.2",
     "rxjs": "~6.5.4",
     "rxjs-compat": "^6.5.4",
